@@ -107,14 +107,29 @@ install_headers(webrtc_audio_processing_include_headers,
     subdir: 'webrtc_audio_processing/webrtc/modules/audio_processing/include'
 )
 
-libwebrtc_audio_processing = library('webrtc_audio_processing',
+libwebrtc_audio_processing_objects = [
+  libbase.extract_all_objects(),
+  libcommon_audio.extract_all_objects(),
+  libwebrtc.extract_all_objects(),
+  libaudio_coding.extract_all_objects(),
+  libsystem_wrappers.extract_all_objects()
+]
+
+if have_x86
+  libwebrtc_audio_processing_objects += [
+    arch_libs[0].extract_all_objects(),
+    extra_libs[0].extract_all_objects()
+  ]
+endif
+
+libwebrtc_audio_processing = static_library('webrtc_audio_processing',
     webrtc_audio_processing_sources,
     dependencies: [base_dep, audio_coding_dep, system_wrappers_dep, common_audio_dep, audio_coding_dep, webrtc_dep] + common_deps,
     link_with: extra_libs,
+    objects: libwebrtc_audio_processing_objects,
     include_directories: webrtc_inc,
     c_args: common_cflags,
     cpp_args: common_cxxflags,
-    soversion: soversion,
     install: true
 )
 
