@@ -14,16 +14,6 @@ several different projects.
 [1] http://code.google.com/p/webrtc/
 [2] https://chromium.googlesource.com/external/webrtc/trunk/webrtc.git
 
-Feedback
-========
-
-Patches, suggestions welcome. You can send them to the PulseAudio mailing
-list[3] or to me at the address below.
-
--- Arun Raghavan <mail@arunraghavan.net>
-
-[3] http://lists.freedesktop.org/mailman/listinfo/pulseaudio-discuss
-
 Notes
 ====
 
