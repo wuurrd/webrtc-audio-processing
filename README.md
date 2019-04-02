@@ -1,6 +1,6 @@
 # About
 
-The AudioProcessing module from the WebRTC[1][2]
+The AudioProcessing module from WebRTC[1][2]
 
 [1] http://code.google.com/p/webrtc/
 [2] https://chromium.googlesource.com/external/webrtc/trunk/webrtc.git
