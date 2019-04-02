@@ -1,26 +1,21 @@
-About
-=====
+# About
 
-This is meant to be a more Linux packaging friendly copy of the AudioProcessing
-module from the WebRTC[1][2] project. The ideal case is that we make no changes to
-the code to make tracking upstream code easy.
-
-This package currently only includes the AudioProcessing bits, but I am very
-open to collaborating with other projects that wish to distribute other bits of
-the code and hopefully eventually have a single point of packaging all the
-WebRTC code to help people reuse the code and avoid keeping private copies in
-several different projects.
+The AudioProcessing module from the WebRTC[1][2]
 
 [1] http://code.google.com/p/webrtc/
 [2] https://chromium.googlesource.com/external/webrtc/trunk/webrtc.git
 
-Notes
-====
+# Build
 
-1. Some files need to be patch to avoid pulling in the gtest framework. This
-   should ideally be pushed upstream in some way so we're able to just pull
-   in what we need without changing anything.
+1. Install Meson: http://mesonbuild.com/Getting-meson.html
+2. Install Ninja: https://github.com/ninja-build/ninja/releases
+3. Run:
 
-2. It might be nice to try LTO on the library. We build a lot of code as part
-   of the main AudioProcessing module deps, and it's possible that this could
-   provide significant space savings.
+```
+mkdir build
+cd build
+meson ../
+ninja
+```
+
+* To cross-build for another platform, use `meson ../ --cross-file ../cross-files/xxx.txt`
