@@ -14,8 +14,9 @@ The AudioProcessing module from WebRTC[1][2]
 ```
 mkdir build
 cd build
-meson ../ --buildtype=debug/release
+meson ../
 ninja
 ```
 
+* To specify a build type, use `meson ../ --buildtype=debug` or `meson ../ --buildtype=release`
 * To cross-build for another platform, use `meson ../ --cross-file ../cross-files/xxx.txt`
