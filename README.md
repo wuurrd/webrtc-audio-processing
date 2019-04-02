@@ -9,12 +9,12 @@ The AudioProcessing module from WebRTC[1][2]
 
 1. Install Meson: http://mesonbuild.com/Getting-meson.html
 2. Install Ninja: https://github.com/ninja-build/ninja/releases
-3. Run:
+3. Open a Terminal / Visual Studio Command Prompt and run:
 
 ```
 mkdir build
 cd build
-meson ../
+meson ../ --buildtype=debug/release
 ninja
 ```
 
