@@ -6,11 +6,13 @@
 *~
 .deps*
 .dirstamp
+.DS_Store
 .libs*
 Makefile
 Makefile.in
 aclocal.m4
 autom4te.cache
+build/
 compile
 config.guess
 config.h
