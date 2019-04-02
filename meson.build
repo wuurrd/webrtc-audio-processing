@@ -33,7 +33,7 @@ elif host_system == 'linux'
   os_deps += [dependency('threads')]
   have_posix = true
 elif host_system == 'windows'
-  platform_cflags += ['-DWEBRTC_WIN', '-D_WIN32', '-U__STRICT_ANSI__', '-D_WINSOCKAPI_', '-DNOMINMAX']
+  platform_cflags += ['-DWEBRTC_WIN', '-D_WIN32', '-U__STRICT_ANSI__', '-D_WINSOCKAPI_', '-DNOMINMAX', '-D_USE_MATH_DEFINES']
   os_deps += [cc.find_library('winmm')]
   have_win = true
 endif
