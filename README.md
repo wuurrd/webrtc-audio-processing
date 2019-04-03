@@ -19,4 +19,4 @@ ninja
 ```
 
 * To specify a build type, use `meson ../ --buildtype=debug` or `meson ../ --buildtype=release`
-* To cross-build for another platform, use `meson ../ --cross-file ../cross-files/xxx.txt`
+* To cross-build for another platform, use `meson ../ --cross-file xxx.txt`
