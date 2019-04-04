@@ -92,7 +92,10 @@ else
 endif
 
 common_cflags = ['-DWEBRTC_AUDIO_PROCESSING_ONLY_BUILD', '-DNDEBUG'] + platform_cflags + os_cflags + arch_cflags + noise_cflags
-common_cxxflags = ['-std=c++11'] + common_cflags
+common_cxxflags = common_cflags
+if host_system != 'windows'
+    common_cxxflags += '-std=c++14'
+endif
 common_deps = os_deps
 webrtc_inc = include_directories('.')
 
