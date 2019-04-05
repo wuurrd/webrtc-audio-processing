@@ -1,0 +1,15 @@
+# To use this, first run:
+# export PATH="$PATH:.../android-ndk-rxxx/toolchains/llvm/prebuilt/linux-x86_64/bin"
+
+[host_machine]
+system = 'android'
+cpu_family = 'aarch64'
+cpu = 'arm64'
+endian = 'little'
+
+[binaries]
+c = 'aarch64-linux-android28-clang'
+cpp = 'aarch64-linux-android28-clang++'
+ar = 'aarch64-linux-android-ar'
+strip = 'aarch64-linux-android-strip'
+pkgconfig = 'false'

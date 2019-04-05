@@ -1,0 +1,22 @@
+[host_machine]
+system = 'ios'
+cpu_family = 'arm'
+cpu = 'armv7'
+endian = 'little'
+
+[binaries]
+c = 'clang'
+cpp = 'clang++'
+ar = 'ar'
+strip = 'strip'
+
+[properties]
+root = '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer'
+
+c_args = ['-arch', 'armv7', '-miphoneos-version-min=8.0', '-isysroot', '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk']
+cpp_args = ['-arch', 'armv7', '-miphoneos-version-min=8.0', '-isysroot', '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk']
+c_link_args = ['-arch', 'armv7', '-miphoneos-version-min=8.0', '-isysroot', '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk']
+cpp_link_args = ['-arch', 'armv7', '-miphoneos-version-min=8.0', '-isysroot', '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk']
+
+has_function_printf = true
+has_function_hfkerhisadf = false
