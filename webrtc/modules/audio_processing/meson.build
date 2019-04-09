@@ -124,17 +124,10 @@ endif
 
 libwebrtc_audio_processing = static_library('webrtc_audio_processing',
     webrtc_audio_processing_sources,
-    dependencies: [base_dep, audio_coding_dep, system_wrappers_dep, common_audio_dep, audio_coding_dep, webrtc_dep] + common_deps,
-    link_with: extra_libs,
+    dependencies: common_deps,
     objects: libwebrtc_audio_processing_objects,
     include_directories: webrtc_inc,
     c_args: common_cflags,
     cpp_args: common_cxxflags,
     install: true
-)
-
-webrtc_audio_processing_dep = declare_dependency(
-    link_with: libwebrtc_audio_processing,
-    include_directories: webrtc_inc,
-    version: meson.project_version()
 )

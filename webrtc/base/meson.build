@@ -27,8 +27,3 @@ libbase = static_library('libbase',
     include_directories: webrtc_inc,
     cpp_args : common_cxxflags
 )
-
-base_dep = declare_dependency(
-    link_with: libbase
-)
-

@@ -27,7 +27,3 @@ libaudio_coding = static_library('audio_coding',
     c_args: common_cflags,
     cpp_args: common_cxxflags
 )
-
-audio_coding_dep = declare_dependency(
-    link_with: libaudio_coding
-)

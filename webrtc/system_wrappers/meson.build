@@ -51,7 +51,3 @@ libsystem_wrappers = static_library('system_wrappers',
     c_args : common_cflags,
     cpp_args : common_cxxflags
 )
-
-system_wrappers_dep = declare_dependency(
-    link_with: libsystem_wrappers
-)

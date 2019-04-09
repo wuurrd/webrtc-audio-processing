@@ -105,7 +105,3 @@ libcommon_audio = static_library('common_audio',
     c_args: common_cflags,
     cpp_args: common_cxxflags
 )
-
-common_audio_dep = declare_dependency(
-  link_with: [libcommon_audio] + arch_libs,
-)

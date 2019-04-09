@@ -20,10 +20,6 @@ libwebrtc = static_library('webrtc',
     cpp_args: common_cxxflags
 )
 
-webrtc_dep = declare_dependency(
-    link_with: libwebrtc
-)
-
 subdir('base')
 subdir('common_audio')
 subdir('system_wrappers')
