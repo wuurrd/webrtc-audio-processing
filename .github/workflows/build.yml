@@ -78,7 +78,6 @@ jobs:
 
       - name: Release
         uses: softprops/action-gh-release@v1
-        if: matrix.platform == 'windows-latest'
         with:
           files: |
             webrtc-${{runner.os}}.zip
