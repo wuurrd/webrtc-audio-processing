@@ -1,0 +1,73 @@
+name: "release"
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release:
+    permissions: write-all
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, ubuntu-latest, windows-latest]
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.5.1
+
+      - name: install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+      - name: Install Python Dependencies
+        run: pip install meson ninja
+
+      - name: install linux deps
+        if: matrix.platform == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y webkit2gtk-4.0 portaudio19-dev build-essential libtool automake libasound2-dev libasound2
+
+      - name: install mac deps
+        if: matrix.platform == 'macos-latest'
+        run: |
+          brew install libtool
+          brew install automake
+
+      - name: install windows deps
+        if: matrix.platform == 'windows-latest'
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: build unix
+        if: matrix.platform != 'windows-latest'
+        run: |
+          mkdir -p rtc/build
+          cd rtc/build
+          meson setup ../.. -Ddefault_library=static --backend=ninja
+          ninja
+          DESTDIR=../ ninja install
+          cd ../
+          ls -lA
+
+      - name: build windows
+        if: matrix.platform == 'windows-latest'
+        run: |
+          mkdir build
+          cd build
+          meson setup .. -Ddefault_library=static --backend=vs
+          msbuild .\\webrtc-audio-processing.sln
+          ls -lA webrtc
