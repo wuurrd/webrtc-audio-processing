@@ -64,7 +64,7 @@ jobs:
           DESTDIR=../ ninja install
           cd ../
           ls -lA
-          zip -r ../webrtc.zip lib
+          zip -r ../webrtc-${{runner.os}}.zip lib
 
       - name: build windows
         if: matrix.platform == 'windows-latest'
@@ -74,18 +74,14 @@ jobs:
           meson setup .. -Ddefault_library=static --backend=vs --prefix=/
           msbuild .\\webrtc-audio-processing.sln
           ls webrtc
-          powershell Compress-Archive webrtc ..\webrtc.zip
+          powershell Compress-Archive webrtc ..\webrtc-${{runner.os}}.zip
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: matrix.platform == 'windows-latest'
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
+          files: |
+            webrtc-${{runner.os}}.zip
 
       - name: Upload Release Asset
         id: upload-release-asset
