@@ -152,6 +152,9 @@ struct AecCore {
   // Runtime selection of number of filter partitions.
   int num_partitions;
 
+  // 1 = pause FIR filter adaptation, 0 = resume.
+  int pause_filter_adaptation;
+
 #ifdef WEBRTC_AEC_DEBUG_DUMP
   // Sequence number of this AEC instance, so that different instances can
   // choose different dump file names.

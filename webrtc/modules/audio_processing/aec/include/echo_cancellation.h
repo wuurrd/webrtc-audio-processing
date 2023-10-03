@@ -26,7 +26,9 @@
 #define AEC_BAD_PARAMETER_WARNING 12050
 
 enum {
-  kAecNlpConservative = 0,
+  kAecNlpMostConservative = 0,
+  kAecNlpMoreConservative,
+  kAecNlpConservative,
   kAecNlpModerate,
   kAecNlpAggressive
 };

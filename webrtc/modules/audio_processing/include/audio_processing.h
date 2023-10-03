@@ -415,7 +415,7 @@ class AudioProcessing {
   // Same as above but uses an existing PlatformFile handle. Takes ownership
   // of |handle| and closes it at StopDebugRecording().
   // TODO(xians): Make this interface pure virtual.
-  virtual int StartDebugRecordingForPlatformFile(rtc::PlatformFile) {
+  virtual int StartDebugRecordingForPlatformFile(rtc::PlatformFile handle) {
       return -1;
   }
 
@@ -618,6 +618,8 @@ class EchoCancellation {
   virtual int stream_drift_samples() const = 0;
 
   enum SuppressionLevel {
+    kLowestSuppression,
+    kLowerSuppression,
     kLowSuppression,
     kModerateSuppression,
     kHighSuppression

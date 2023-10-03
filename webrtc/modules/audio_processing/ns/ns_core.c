@@ -1017,6 +1017,7 @@ int WebRtcNs_set_policy_core(NoiseSuppressionC* self, int mode) {
     return (-1);
   }
 
+  // TODO(skywhale): Experiment with these params.
   self->aggrMode = mode;
   if (mode == 0) {
     self->overdrive = 1.f;

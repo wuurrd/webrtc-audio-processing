@@ -117,6 +117,9 @@ void WebRtcAec_enable_extended_filter(AecCore* self, int enable);
 // Returns non-zero if extended filter mode is enabled and zero if disabled.
 int WebRtcAec_extended_filter_enabled(AecCore* self);
 
+// Pauses the dynamic adaptation of FIR filter. Non-zero pauses, zero resumes.
+void WebRtcAec_pause_filter_adaptation(AecCore* self, int paused);
+
 // Returns the current |system_delay|, i.e., the buffered difference between
 // far-end and near-end.
 int WebRtcAec_system_delay(AecCore* self);

@@ -41,6 +41,7 @@ class EchoCancellationImpl : public EchoCancellation,
 
   bool is_delay_agnostic_enabled() const;
   bool is_extended_filter_enabled() const;
+  void PauseFilterAdaptation(bool pause);
 
  private:
   // EchoCancellation implementation.

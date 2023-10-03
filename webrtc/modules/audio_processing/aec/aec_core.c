@@ -109,12 +109,12 @@ static const int kDelayCorrectionStart = 1500;  // 10 ms chunks
 #endif
 
 // Target suppression levels for nlp modes.
-// log{0.001, 0.00001, 0.00000001}
-static const float kTargetSupp[3] = {-6.9f, -11.5f, -18.4f};
+// log{0.1, 0.01, 0.001, 0.00001, 0.00000001}
+static const float kTargetSupp[5] = {-2.3f, -4.6f, -6.9f, -11.5f, -18.4f};
 
 // Two sets of parameters, one for the extended filter mode.
-static const float kExtendedMinOverDrive[3] = {3.0f, 6.0f, 15.0f};
-static const float kNormalMinOverDrive[3] = {1.0f, 2.0f, 5.0f};
+static const float kExtendedMinOverDrive[5] = {1.0f, 2.0f, 3.0f, 6.0f, 15.0f};
+static const float kNormalMinOverDrive[5] = {1.0f, 1.0f, 1.0f, 2.0f, 5.0f};
 const float WebRtcAec_kExtendedSmoothingCoefficients[2][2] = {{0.9f, 0.1f},
                                                               {0.92f, 0.08f}};
 const float WebRtcAec_kNormalSmoothingCoefficients[2][2] = {{0.9f, 0.1f},
@@ -1364,9 +1364,12 @@ static void ProcessBlock(AecCore* aec) {
     UpdateLevel(&aec->linoutlevel, ef);
   }
 
-  // Scale error signal inversely with far power.
-  WebRtcAec_ScaleErrorSignal(aec, ef);
-  WebRtcAec_FilterAdaptation(aec, fft, ef);
+  // Pause FIR filter adaptation if instructed as such.
+  if (aec->pause_filter_adaptation == 0) {
+    // Scale error signal inversely with far power.
+    WebRtcAec_ScaleErrorSignal(aec, ef);
+    WebRtcAec_FilterAdaptation(aec, fft, ef);
+  }
   NonLinearProcessing(aec, output, outputH_ptr);
 
   if (aec->metricsMode == 1) {
@@ -1469,6 +1472,7 @@ AecCore* WebRtcAec_CreateAec() {
   WebRtc_set_lookahead(aec->delay_estimator, kLookaheadBlocks);
 #endif
   aec->extended_filter_enabled = 0;
+  aec->pause_filter_adaptation = 0;
 
   // Assembly optimization
   WebRtcAec_FilterFar = FilterFar;
@@ -1618,7 +1622,7 @@ int WebRtcAec_InitAec(AecCore* aec, int sampFreq) {
   aec->frame_count = 0;
 
   // Default target suppression mode.
-  aec->nlp_mode = 1;
+  aec->nlp_mode = 3; // kAecNlpConservative
 
   // Sampling frequency multiplier w.r.t. 8 kHz.
   // In case of multiple bands we process the lower band in 16 kHz, hence the
@@ -1888,7 +1892,7 @@ void WebRtcAec_SetConfigCore(AecCore* self,
                              int nlp_mode,
                              int metrics_mode,
                              int delay_logging) {
-  assert(nlp_mode >= 0 && nlp_mode < 3);
+  assert(nlp_mode >= 0 && nlp_mode < arraysize(kTargetSupp));
   self->nlp_mode = nlp_mode;
   self->metricsMode = metrics_mode;
   if (self->metricsMode) {
@@ -1919,6 +1923,10 @@ void WebRtcAec_enable_extended_filter(AecCore* self, int enable) {
 
 int WebRtcAec_extended_filter_enabled(AecCore* self) {
   return self->extended_filter_enabled;
+}
+
+void WebRtcAec_pause_filter_adaptation(AecCore* self, int paused) {
+  self->pause_filter_adaptation = paused;
 }
 
 int WebRtcAec_system_delay(AecCore* self) { return self->system_delay; }

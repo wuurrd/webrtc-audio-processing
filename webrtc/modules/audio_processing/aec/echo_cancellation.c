@@ -415,7 +415,9 @@ int WebRtcAec_set_config(void* handle, AecConfig config) {
   }
   self->skewMode = config.skewMode;
 
-  if (config.nlpMode != kAecNlpConservative &&
+  if (config.nlpMode != kAecNlpMostConservative &&
+      config.nlpMode != kAecNlpMoreConservative &&
+      config.nlpMode != kAecNlpConservative &&
       config.nlpMode != kAecNlpModerate &&
       config.nlpMode != kAecNlpAggressive) {
     self->lastError = AEC_BAD_PARAMETER_ERROR;

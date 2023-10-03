@@ -27,6 +27,10 @@ typedef void Handle;
 namespace {
 int16_t MapSetting(EchoCancellation::SuppressionLevel level) {
   switch (level) {
+    case EchoCancellation::kLowestSuppression:
+      return kAecNlpMostConservative;
+    case EchoCancellation::kLowerSuppression:
+      return kAecNlpMoreConservative;
     case EchoCancellation::kLowSuppression:
       return kAecNlpConservative;
     case EchoCancellation::kModerateSuppression:
@@ -339,6 +343,13 @@ void EchoCancellationImpl::SetExtraOptions(const Config& config) {
   extended_filter_enabled_ = config.Get<ExtendedFilter>().enabled;
   delay_agnostic_enabled_ = config.Get<DelayAgnostic>().enabled;
   Configure();
+}
+
+void EchoCancellationImpl::PauseFilterAdaptation(bool pause) {
+  for (size_t handle_index = 0; handle_index < num_handles(); handle_index++) {
+    Handle* handle1 = static_cast<Handle*>(handle(handle_index));
+    WebRtcAec_pause_filter_adaptation(WebRtcAec_aec_core(handle1), pause ? 1 : 0);
+  }
 }
 
 void* EchoCancellationImpl::CreateHandle() const {
